@@ -9,6 +9,7 @@ import { ISuperhero } from '../../../2_domain/models/superhero-display';
   styleUrls: [
     '../../../../styles/superhero-list.scss',
     '../../../../styles/superhero-item.scss',
+    '../../../../styles/button.scss',
   ],
 })
 export class SuperherosListComponent {
