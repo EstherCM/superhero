@@ -1,0 +1,8 @@
+<main>
+  <section aria-label="Listado de superheroes" class="superhero-list">
+    <article *ngFor="let hero of superheros">
+      <img [src]="hero.image">
+      <p>{{hero.name}}</p>
+    </article>
+  </section>
+</main>
