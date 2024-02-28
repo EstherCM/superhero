@@ -1,6 +1,11 @@
 .superhero-list {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
+  font-family: fantasy;
+  text-transform: uppercase;
+  text-align: center;
+  gap: 24px;
+  margin-top: 16px;
 }

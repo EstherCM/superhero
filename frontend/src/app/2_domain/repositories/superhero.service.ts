@@ -16,7 +16,7 @@ export class SuperheroRepository {
       map((superheros) =>
         superheros.map((superhero) => ({
           name: superhero.name,
-          image: superhero.images.sm,
+          image: superhero.images.md,
         }))
       )
     );
