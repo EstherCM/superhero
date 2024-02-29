@@ -1,6 +1,6 @@
 <main>
-  <button class="button">Filtros</button>
-  <section aria-label="Listado de superheroes" class="superhero-list">
+  <section aria-label="Listado de superheroes" class="superhero-list"
+    [ngClass]="{'superhero-list--single-superhero': superheros.length === 1}">
     <article *ngFor="let hero of superheros" class="superhero-item">
       <img [src]="hero.image" class="superhero-item__img">
       <p class="superhero-item__name">{{hero.name}}</p>

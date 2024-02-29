@@ -8,8 +8,20 @@
   border-radius: 16px;
   background: linear-gradient(rgb(255,165,0),rgb(30,144,255)) border-box;
   cursor: pointer;
+  overflow: hidden;
+
+  &--single-superhero {
+    margin-left: 24px;
+  }
 
   &__img {
     border-radius: 16px;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &:hover &__img {
+    transform: scale(0.9);
   }
 }

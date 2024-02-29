@@ -1,6 +1,11 @@
-<main class="superhero-filters-container">
-  <aside id="filtersBar" class="superhero-filters">
-    <form>
+<main class="superhero-filters-container" [ngClass]="{'superhero-filters-container--open': isOpen}">
+  <aside id="filtersBar" class="superhero-filters" [ngClass]="{'superhero-filters--open': isOpen }">
+    <sh-loader></sh-loader>
+    <form [formGroup]="searchSuperherosForm" (ngSubmit)="onSubmit()" class="superhero-filters__group">
+      <div class="superhero-filters__item">
+        <label for="name" class="superhero-filters__title" data-test="recipeNameLabel">Nombre</label>
+        <input id="name" type="text" formControlName="name" class="superhero-filters__value">
+      </div>
       <button type="submit" class="button">Buscar</button>
     </form>
   </aside>

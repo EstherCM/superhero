@@ -11,14 +11,14 @@ import { ISuperhero } from '../models/superhero-display';
 export class SuperheroRepository {
   constructor(private readonly superheroAdapter: SuperheroAdapter) {}
 
-  get(): Observable<ISuperhero[]> {
-    return this.superheroAdapter.get().pipe(
-      map((superheros) =>
-        superheros.map((superhero) => ({
+  get(filters: { name: string }): Observable<ISuperhero[]> {
+    return this.superheroAdapter.get(filters).pipe(
+      map((superheros) => {
+        return superheros.map((superhero) => ({
           name: superhero.name,
           image: superhero.images.md,
-        }))
-      )
+        }));
+      })
     );
   }
 }
