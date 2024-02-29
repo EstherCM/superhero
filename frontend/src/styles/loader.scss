@@ -13,7 +13,7 @@
   margin: 24px;
 
   &__item {
-    width: 56px;
+    width: calc(0.032 * 100vw);
     animation: bounce 0.7s infinite alternate;
 
     &:nth-child(1) {
