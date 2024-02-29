@@ -1,7 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { SuperheroRepository } from '../../../2_domain/repositories/superhero.service';
 import { ISuperhero } from '../../../2_domain/models/superhero-display';
 import { SuperheroService } from '../../services/superhero.service';
 
@@ -15,28 +14,21 @@ import { SuperheroService } from '../../services/superhero.service';
 })
 export class SuperherosFilterComponent {
   @Input() isOpen = false;
+  @Output() superheros = new EventEmitter<ISuperhero[]>();
 
   public searchSuperherosForm = new FormGroup({
     name: new FormControl(''),
   });
 
-  constructor(
-    private superheroRepository: SuperheroRepository,
-    private superheroService: SuperheroService
-  ) {}
+  constructor(private superheroService: SuperheroService) {}
 
   onSubmit() {
     const formValue = this.searchSuperherosForm.value;
-
     const filters = {
       name: formValue.name || '',
     };
 
-    this.superheroRepository.get(filters).subscribe({
-      next: (superheros: ISuperhero[]) => {
-        return this.superheroService.updateSuperheros(superheros);
-      },
-      error: (error) => console.error('🔥 Error getting superheros:', error),
-    });
+    this.superheroService.setFilter(filters);
+    this.superheroService.superheros$.subscribe((superheros) => this.superheros.emit(superheros));
   }
 }

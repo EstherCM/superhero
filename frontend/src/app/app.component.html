@@ -3,10 +3,8 @@
     <h1>Superheros</h1>
   </header>
   <section aria-label="Vista del listado de superheroes" class="superhero-list-container">
-    <sh-filter [isOpen]="showFilterBar"></sh-filter>
     <section>
-      <button class="button" (click)="toggleFilterBar($event)">Filtros</button>
-      <sh-list></sh-list>
+      <router-outlet></router-outlet>
     </section>
   </section>
 </main>

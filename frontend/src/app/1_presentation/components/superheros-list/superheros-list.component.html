@@ -1,8 +1,10 @@
 <main>
+  <sh-filter [isOpen]="showFilterBar" (superheros)="updateSuperheros($event)"></sh-filter>
+  <button class="button" (click)="toggleFilterBar($event)">Filtros</button>
   <section aria-label="Listado de superheroes" class="superhero-list"
     [ngClass]="{'superhero-list--single-superhero': superheros.length === 1}">
-    <article *ngFor="let hero of superheros" class="superhero-item">
-      <img [src]="hero.image" class="superhero-item__img">
+    <article *ngFor="let hero of superheros" class="superhero-item" [routerLink]="['/superhero', hero.id]">
+      <img [src]="hero.image" alt="{{hero.name}}" class="superhero-item__img">
       <p class="superhero-item__name">{{hero.name}}</p>
     </article>
   </section>

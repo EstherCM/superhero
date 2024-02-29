@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { SuperherosListComponent } from './1_presentation/components/superheros-list/superheros-list.component';
 import { SuperherosFilterComponent } from './1_presentation/components/superheros-filter/superheros-filter.component';
 import { LoaderComponent } from './1_presentation/components/loader/loader.component';
+import { SuperherosDetailComponent } from './1_presentation/components/superhero-detail/superheros-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SuperherosListComponent,
     SuperherosFilterComponent,
-    LoaderComponent
+    LoaderComponent,
+    SuperherosDetailComponent
   ],
   imports: [
     BrowserModule,

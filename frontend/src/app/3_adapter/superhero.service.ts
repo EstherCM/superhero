@@ -43,4 +43,11 @@ export class SuperheroAdapter {
       );
     }
   }
+
+  getById(id: string): Observable<IDBSuperhero> {
+    const url = `${this.baseURL}/id/${id}`;
+
+    return this.http.get<IDBSuperhero>(url);
+  }
+
 }
