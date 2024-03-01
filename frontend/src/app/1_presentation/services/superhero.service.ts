@@ -8,8 +8,8 @@ import { SuperheroRepository } from '../../2_domain/repositories/superhero.servi
   providedIn: 'root',
 })
 export class SuperheroService {
-  private superherosSubject: BehaviorSubject<ISuperhero[]> = new BehaviorSubject<ISuperhero[]>([]);
-  public superheros$: Observable<ISuperhero[]> = this.superherosSubject.asObservable();
+  private superherosSubject: BehaviorSubject<Partial<ISuperhero>[]> = new BehaviorSubject<Partial<ISuperhero>[]>([]);
+  public superheros$: Observable<Partial<ISuperhero>[]> = this.superherosSubject.asObservable();
 
   private filters = {
     name: '',
@@ -19,7 +19,7 @@ export class SuperheroService {
 
   get() {
     this.superheroRepository.get(this.filters).subscribe({
-      next: (superheros: ISuperhero[]) => this.superherosSubject.next(superheros),
+      next: (superheros: Partial<ISuperhero>[]) => this.superherosSubject.next(superheros),
       error: (error) => console.error('🔥 Error getting superheros:', error),
     });
   }

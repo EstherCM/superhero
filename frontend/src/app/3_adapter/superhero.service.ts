@@ -15,8 +15,8 @@ export class SuperheroAdapter {
   /**
    * El filtro debería hacerse desde el backend con queryParams
    * pero ahora estoy mockeando ese filtro para hacerlo desde el lado del cliente
+   * lo guardo en el localstorage para posteriormente poder hacer actualizaciones
    */
-
   get(params: { name: string }): Observable<IDBSuperhero[]> {
     const url = `${this.baseURL}/all.json`;
     const storedAllResponseString = localStorage.getItem('allResponse');
@@ -44,8 +44,8 @@ export class SuperheroAdapter {
     }
   }
 
-  getById(id: string): Observable<IDBSuperhero> {
-    const url = `${this.baseURL}/id/${id}`;
+  getById(id: string | null): Observable<IDBSuperhero> {
+    const url = `${this.baseURL}/id/${id}.json`;
 
     return this.http.get<IDBSuperhero>(url);
   }

@@ -2,7 +2,6 @@ import { Component, ElementRef } from '@angular/core';
 
 import { SuperheroRepository } from '../../../2_domain/repositories/superhero.service';
 import { ISuperhero } from '../../../2_domain/models/superhero-display';
-import { SuperheroService } from '../../services/superhero.service';
 
 @Component({
   selector: 'sh-list',
@@ -14,7 +13,7 @@ import { SuperheroService } from '../../services/superhero.service';
   ],
 })
 export class SuperherosListComponent {
-  public superheros: ISuperhero[] = [];
+  public superheros: Partial<ISuperhero>[] = [];
   public showFilterBar = false;
 
   constructor(
@@ -30,7 +29,7 @@ export class SuperherosListComponent {
     };
 
     return this.superheroRepository.get(filters).subscribe({
-      next: (superheros: ISuperhero[]) => (this.superheros = superheros),
+      next: (superheros: Partial<ISuperhero>[]) => (this.superheros = superheros),
       error: (error) => console.error('🔥 Error getting superheros:', error),
     });
   }
@@ -64,7 +63,7 @@ export class SuperherosListComponent {
     }
   }
 
-  updateSuperheros(superheros: ISuperhero[]) {
+  updateSuperheros(superheros: Partial<ISuperhero>[]) {
     this.superheros = superheros;
     this.closeFilters();
   }

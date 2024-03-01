@@ -1,6 +1,6 @@
 # 🦸 SUPERHERO
 
-SPA para gestionar superheroes
+SPA para gestionar superhéroes
 
 ### 🛠️ Stack
 

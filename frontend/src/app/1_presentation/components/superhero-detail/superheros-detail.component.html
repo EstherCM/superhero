@@ -1,1 +1,17 @@
-<p>superhero-detail works! {{heroId}}</p>
+<main>
+  <section aria-label="Sección de la información de cada superhéroe" class="superhero-detail">
+    <section aria-label="Modal de información" class="superhero-detail__card">
+      <img [src]="hero.image" class="superhero-detail__img">
+      <article class="superhero-detail__description">
+        <h3>{{ hero.name }}</h3>
+        <p><i>Lugar de nacimiento:</i> {{ hero.biography.placeOfBirth }}</p>
+        <p><i>Trabajo:</i> {{ hero.work }}</p>
+        <p><i>Parientes:</i></p>
+        <ul>
+          <li *ngFor="let relative of hero.connections.relatives"> {{relative }}</li>
+        </ul>
+        <canvas #stats class="superhero-detail__powerstats"></canvas>
+      </article>
+    </section>
+  </section>
+</main>

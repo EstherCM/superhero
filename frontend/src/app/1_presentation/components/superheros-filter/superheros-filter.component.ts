@@ -14,7 +14,7 @@ import { SuperheroService } from '../../services/superhero.service';
 })
 export class SuperherosFilterComponent {
   @Input() isOpen = false;
-  @Output() superheros = new EventEmitter<ISuperhero[]>();
+  @Output() superheros = new EventEmitter<Partial<ISuperhero>[]>();
 
   public searchSuperherosForm = new FormGroup({
     name: new FormControl(''),

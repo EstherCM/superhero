@@ -1,0 +1,38 @@
+.superhero-detail {
+  background: linear-gradient(rgb(255,165,0),rgb(30,144,255)) border-box;
+  height: calc(100vh - 90px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__card {
+    width: 75%;
+    height: 75%;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    max-width: 1000px;
+    width: 100%;
+  }
+
+  &__img {
+    height: 80%;
+    border-radius: 8px;
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    margin: 16px;
+    max-width: 400px;
+  }
+
+  &__powerstats {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 250px;
+    max-width: 250px;
+  }
+}
