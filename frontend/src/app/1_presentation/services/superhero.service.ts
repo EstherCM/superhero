@@ -16,7 +16,7 @@ export class SuperheroService {
   private superherosSubject: BehaviorSubject<Partial<ISuperhero>[]> = new BehaviorSubject<Partial<ISuperhero>[]>([]);
   public superheros$: Observable<Partial<ISuperhero>[]> = this.superherosSubject.asObservable();
 
-  private heroSubject = new BehaviorSubject<ISuperhero>({
+  private emptySuperhero = {
     id: '',
     name: '',
     image: '',
@@ -44,7 +44,9 @@ export class SuperheroService {
       strength: 0,
     },
     work: '',
-  });
+  };
+
+  private heroSubject = new BehaviorSubject<ISuperhero>(this.emptySuperhero);
   public hero$ = this.heroSubject.asObservable();
 
   private filters = {
@@ -211,5 +213,18 @@ export class SuperheroService {
     this.setSuperhero(newHero);
 
     return this.hero$;
+  }
+
+  deleteSuperhero(id: string) {
+    const storedSuperheroes = localStorage.getItem('allResponse');
+    let superheroes: ISuperhero[] = storedSuperheroes ? JSON.parse(storedSuperheroes) : [];
+
+    superheroes = superheroes.filter((hero) => hero.id != id);
+
+    localStorage.setItem('allResponse', JSON.stringify(superheroes));
+
+    const updatedHero = superheroes.length > 0 ? superheroes[0] : this.emptySuperhero;
+
+    this.setSuperhero(updatedHero);
   }
 }

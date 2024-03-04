@@ -1,10 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as Chart from 'chart.js/auto';
+import { Subject, takeUntil } from 'rxjs';
 
 import { ISuperhero } from '../../../2_domain/models/superhero-display';
 import { SuperheroService } from '../../services/superhero.service';
-import { Subject, takeUntil } from 'rxjs';
+import { ConfirmationDialogService } from '../../services/confirmation-dialog.service';
 
 @Component({
   selector: 'sp-detail',
@@ -16,14 +17,15 @@ export class SuperherosDetailComponent {
 
   public heroId: string | null = '';
   public hero!: ISuperhero | null;
-  public lastRoute: string | null = null;
+  public deleteDialog = '¿Estás seguro de eliminar a este superhéroe?';
 
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
     private superheroService: SuperheroService,
-    private router: Router
+    private router: Router,
+    private confirmationDialogService: ConfirmationDialogService
   ) {}
 
   ngAfterViewInit() {
@@ -69,10 +71,27 @@ export class SuperherosDetailComponent {
       .getById(this.heroId)
       .pipe(takeUntil(this.destroy$))
       .subscribe((initialSuperhero) => (this.hero = initialSuperhero));
+
+    this.confirmationDialogService
+      .getConfirmResponse()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        const id = this.route.snapshot.paramMap.get('id') || '';
+
+        setTimeout(() => {
+          this.superheroService.deleteSuperhero(id);
+          this.confirmationDialogService.stopLoading();
+          this.router.navigate(['/']);
+        }, 5000);
+      });
   }
 
   navigateToEdit() {
     this.router.navigate(['/superhero', this.heroId, 'edit']);
+  }
+
+  showConfirmationDialog() {
+    this.confirmationDialogService.showDialog();
   }
 
   ngOnDestroy() {

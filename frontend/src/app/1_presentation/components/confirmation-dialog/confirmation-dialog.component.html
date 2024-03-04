@@ -1,0 +1,12 @@
+<main>
+  <section aria-label="Sección de confirmación de acción" *ngIf="isDialogVisible" class="confirmation-dialog">
+    <div *ngIf="!isLoading">
+      <p [innerHTML]="contentHtml"></p>
+      <section aria-label="Botonera" class="confirmation-dialog__buttons">
+        <button (click)="confirm()" class="button">Aceptar</button>
+        <button (click)="cancel()" class="button">Cancelar</button>
+      </section>
+    </div>
+    <div *ngIf="isLoading"><sh-loader></sh-loader></div>
+  </section>
+</main>
