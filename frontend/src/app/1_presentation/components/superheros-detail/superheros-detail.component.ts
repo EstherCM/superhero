@@ -90,6 +90,10 @@ export class SuperherosDetailComponent {
     this.router.navigate(['/superhero', this.heroId, 'edit']);
   }
 
+  navigateToList() {
+    this.router.navigate(['/']);
+  }
+
   showConfirmationDialog() {
     this.confirmationDialogService.showDialog();
   }
