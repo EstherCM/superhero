@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 
 import { ISuperhero } from '../../../2_domain/models/superhero-display';
 import { SuperheroService } from '../../services/superhero.service';
@@ -20,6 +21,8 @@ export class SuperherosFilterComponent {
     name: new FormControl(''),
   });
 
+  private destroy$: Subject<void> = new Subject<void>();
+
   constructor(private superheroService: SuperheroService) {}
 
   onSubmit() {
@@ -29,6 +32,13 @@ export class SuperherosFilterComponent {
     };
 
     this.superheroService.setFilter(filters);
-    this.superheroService.superheros$.subscribe((superheros) => this.superheros.emit(superheros));
+    this.superheroService.superheros$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((superheros) => this.superheros.emit(superheros));
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

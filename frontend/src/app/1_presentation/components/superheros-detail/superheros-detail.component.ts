@@ -79,7 +79,7 @@ export class SuperherosDetailComponent {
         const id = this.route.snapshot.paramMap.get('id') || '';
 
         setTimeout(() => {
-          this.superheroService.deleteSuperhero(id);
+          this.superheroService.delete(id);
           this.confirmationDialogService.stopLoading();
           this.router.navigate(['/']);
         }, 5000);

@@ -1,0 +1,58 @@
+<main>
+  <section aria-label="Sección de creación de superhéroes" class="superhero-info">
+    <section aria-label="Modal de información" class="superhero-info__card">
+      <form [formGroup]="superheroForm" (ngSubmit)="onSubmit()" class="superhero-info__form">
+        <section class="superhero-info__description superhero-info__description--create">
+          <section aria-label="Primera columna del formulario">
+            <div class="superhero-info__item">
+              <label for="name" class="superhero-info__title">Nombre:</label>
+              <input type="text" id="name" formControlName="name" class="superhero-info__value">
+            </div>
+            <div class="superhero-info__item">
+              <label for="img" class="superhero-info__title">Imagen (URL):</label>
+              <input type="text" id="img" formControlName="img" class="superhero-info__value">
+            </div>
+            <div class="superhero-info__item">
+              <label for="placeOfBirth" class="superhero-info__title">Lugar de nacimiento:</label>
+              <input type="text" id="placeOfBirth" formControlName="placeOfBirth" class="superhero-info__value">
+            </div>
+            <div class="superhero-info__item">
+              <label for="work" class="superhero-info__title">Trabajo:</label>
+              <input type="text" id="work" formControlName="work" class="superhero-info__value">
+            </div>
+          </section>
+          <section aria-label="Segunda columna del formulario">
+            <div formGroupName="stats">
+              <div class="superhero-info__item">
+                <label class="superhero-info__title">Combat:</label>
+                <input type="number" formControlName="combat" class="superhero-info__value">
+              </div>
+              <div class="superhero-info__item">
+                <label class="superhero-info__title">Durability:</label>
+                <input type="number" formControlName="durability" class="superhero-info__value">
+              </div>
+              <div class="superhero-info__item">
+                <label class="superhero-info__title">Intelligence:</label>
+                <input type="number" formControlName="intelligence" class="superhero-info__value">
+              </div>
+              <div class="superhero-info__item">
+                <label class="superhero-info__title">Power:</label>
+                <input type="number" formControlName="power" class="superhero-info__value">
+              </div>
+              <div class="superhero-info__item">
+                <label class="superhero-info__title">Speed:</label>
+                <input type="number" formControlName="speed" class="superhero-info__value">
+              </div>
+              <div class="superhero-info__item">
+                <label class="superhero-info__title">Strength:</label>
+                <input type="number" formControlName="strength" class="superhero-info__value">
+              </div>
+            </div>
+          </section>
+        </section>
+        <button type="submit" [disabled]="superheroForm.invalid" class="button">Crear</button>
+
+      </form>
+    </section>
+  </section>
+</main>

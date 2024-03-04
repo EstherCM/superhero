@@ -22,9 +22,12 @@ export class ConfirmationDialogComponent {
   constructor(private confirmationDialogService: ConfirmationDialogService) {}
 
   ngOnInit() {
-    this.confirmationDialogService.getDialogResponse().subscribe(() => {
-      this.isDialogVisible = true;
-    });
+    this.confirmationDialogService
+      .getDialogResponse()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.isDialogVisible = true;
+      });
 
     this.confirmationDialogService
       .getLoadingStatus()
@@ -42,5 +45,10 @@ export class ConfirmationDialogComponent {
   cancel() {
     this.isDialogVisible = false;
     this.confirmationDialogService.cancel();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

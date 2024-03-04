@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ISuperhero } from '../../2_domain/models/superhero-display';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, takeUntil, tap } from 'rxjs';
 
 import { SuperheroRepository } from '../../2_domain/repositories/superhero.service';
 import { IDBSuperhero } from '../../2_domain/models/superhero-db';
@@ -52,15 +52,19 @@ export class SuperheroService {
   private filters = {
     name: '',
   };
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private superheroRepository: SuperheroRepository) {}
 
   get() {
-    this.superheroRepository.get(this.filters).subscribe({
-      next: (superheros: Partial<ISuperhero>[]) =>
-        this.superherosSubject.next(superheros),
-      error: (error) => console.error('🔥 Error getting superheros:', error),
-    });
+    this.superheroRepository
+      .get(this.filters)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (superheros: Partial<ISuperhero>[]) =>
+          this.superherosSubject.next(superheros),
+        error: (error) => console.error('🔥 Error getting superheros:', error),
+      });
   }
 
   setFilter(filters: { name: string }) {
@@ -70,7 +74,7 @@ export class SuperheroService {
 
   private transformToLocalFormat(superhero: IDBSuperhero): ISuperhero {
     const relatives = superhero.connections.relatives.split(';');
-  
+
     return {
       id: superhero.id,
       name: superhero.name,
@@ -100,7 +104,7 @@ export class SuperheroService {
       },
       work: superhero.work.occupation,
     };
-  };
+  }
 
   getById(id: string | null): Observable<ISuperhero> {
     const storedSuperheroes = localStorage.getItem('allResponse');
@@ -136,7 +140,7 @@ export class SuperheroService {
         md: transformedHero.image,
         xs: '',
         sm: '',
-        lg: ''
+        lg: '',
       },
       appearance: {
         eyeColor: transformedHero.appearance.eyeColor,
@@ -153,11 +157,11 @@ export class SuperheroService {
         alignment: '',
         alterEgos: '',
         firstAppearance: '',
-        publisher: ''
+        publisher: '',
       },
       connections: {
         relatives: transformedHero.connections.relatives.join(';'),
-        groupAffiliation: ''
+        groupAffiliation: '',
       },
       powerstats: {
         combat: transformedHero.powerstats.combat,
@@ -169,11 +173,11 @@ export class SuperheroService {
       },
       work: {
         occupation: transformedHero.work,
-        base: ''
+        base: '',
       },
-      slug: ''
+      slug: '',
     };
-  };
+  }
 
   update(
     id: string,
@@ -215,7 +219,7 @@ export class SuperheroService {
     return this.hero$;
   }
 
-  deleteSuperhero(id: string) {
+  delete(id: string) {
     const storedSuperheroes = localStorage.getItem('allResponse');
     let superheroes: ISuperhero[] = storedSuperheroes ? JSON.parse(storedSuperheroes) : [];
 
@@ -226,5 +230,55 @@ export class SuperheroService {
     const updatedHero = superheroes.length > 0 ? superheroes[0] : this.emptySuperhero;
 
     this.setSuperhero(updatedHero);
+  }
+
+  private generateUniqueId(superheroes: IDBSuperhero[]): string {
+    const lastId = superheroes.reduce((maxId, hero) => {
+      const heroId = parseInt(hero.id, 10);
+      return heroId > maxId ? heroId : maxId;
+    }, 0);
+    const newId = lastId + 1;
+
+    return newId.toString();
+  }
+
+  create(newHero: {
+    name: string;
+    img: string;
+    placeOfBirth: string;
+    work: string;
+    stats: {
+      combat: number;
+      durability: number;
+      intelligence: number;
+      power: number;
+      speed: number;
+      strength: number;
+    }
+  }): Observable<ISuperhero> {
+    const storedSuperheroes = localStorage.getItem('allResponse');
+    let superheroes: IDBSuperhero[] = storedSuperheroes
+      ? JSON.parse(storedSuperheroes)
+      : [];
+
+    const hero = {
+      ...this.emptySuperhero,
+      id: this.generateUniqueId(superheroes),
+      name: newHero.name,
+      biography: {
+        fullName: '',
+        placeOfBirth: newHero.placeOfBirth,
+      },
+      image: newHero.img,
+      work: newHero.work,
+      powerstats: newHero.stats
+    };
+    const transformedHero = this.transformToOriginalFormat(hero);
+
+    superheroes.push(transformedHero);
+    localStorage.setItem('allResponse', JSON.stringify(superheroes));
+    this.setSuperhero(hero);
+
+    return this.hero$;
   }
 }

@@ -9,6 +9,8 @@
   background: linear-gradient(rgb(255,165,0),rgb(30,144,255)) border-box;
   cursor: pointer;
   overflow: hidden;
+  width: 300px;
+  height: 550px;
 
   &--single-superhero {
     margin-left: 24px;
@@ -16,7 +18,7 @@
 
   &__img {
     border-radius: 16px;
-    width: 100%;
+    width: fit-content;
     height: auto;
     transition: transform 0.3s ease-in-out;
   }

@@ -11,6 +11,7 @@ import { LoaderComponent } from './1_presentation/components/loader/loader.compo
 import { SuperherosDetailComponent } from './1_presentation/components/superheros-detail/superheros-detail.component';
 import { SuperherosEditComponent } from './1_presentation/components/superheros-edit/superheros-edit.component';
 import { ConfirmationDialogComponent } from './1_presentation/components/confirmation-dialog/confirmation-dialog.component';
+import { SuperherosCreateComponent } from './1_presentation/components/superheros-create/superheros-create.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ConfirmationDialogComponent } from './1_presentation/components/confirm
     LoaderComponent,
     SuperherosDetailComponent,
     SuperherosEditComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    SuperherosCreateComponent
   ],
   imports: [
     BrowserModule,

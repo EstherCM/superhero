@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 import { ISuperhero } from '../../../2_domain/models/superhero-display';
 import { SuperheroService } from '../../services/superhero.service';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'sp-edit',

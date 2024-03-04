@@ -1,4 +1,6 @@
 import { Component, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 import { SuperheroRepository } from '../../../2_domain/repositories/superhero.service';
 import { ISuperhero } from '../../../2_domain/models/superhero-display';
@@ -16,9 +18,12 @@ export class SuperherosListComponent {
   public superheros: Partial<ISuperhero>[] = [];
   public showFilterBar = false;
 
+  private destroy$: Subject<void> = new Subject<void>();
+
   constructor(
     private superheroRepository: SuperheroRepository,
-    private el: ElementRef
+    private el: ElementRef,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -28,10 +33,13 @@ export class SuperherosListComponent {
       name: '',
     };
 
-    return this.superheroRepository.get(filters).subscribe({
-      next: (superheros: Partial<ISuperhero>[]) => (this.superheros = superheros),
-      error: (error) => console.error('🔥 Error getting superheros:', error),
-    });
+    return this.superheroRepository
+      .get(filters)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (superheros: Partial<ISuperhero>[]) => (this.superheros = superheros),
+        error: (error) => console.error('🔥 Error getting superheros:', error),
+      });
   }
 
   toggleFilterBar(event: Event) {
@@ -66,5 +74,18 @@ export class SuperherosListComponent {
   updateSuperheros(superheros: Partial<ISuperhero>[]) {
     this.superheros = superheros;
     this.closeFilters();
+  }
+
+  navigateToDetail(id: string | undefined) {
+    this.router.navigate(['/superhero', id]);
+  }
+
+  navigateToCreation() {
+    this.router.navigate(['superhero/create']);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
