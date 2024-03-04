@@ -1,4 +1,4 @@
-.superhero-detail {
+.superhero-info {
   background: linear-gradient(rgb(255,165,0),rgb(30,144,255)) border-box;
   height: calc(100vh - 90px);
   display: flex;
@@ -27,6 +27,7 @@
     flex-direction: column;
     margin: 16px;
     max-width: 400px;
+    align-items: center;
   }
 
   &__powerstats {
@@ -34,5 +35,38 @@
     height: 100% !important;
     max-height: 250px;
     max-width: 250px;
+  }
+
+  &__item {
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    margin: 4px 16px;
+  }
+
+  &__value {
+    width: 90%;
+    height: 24px;
+    border-radius: 4px;
+    background-color: #fec252;
+    border: 2px solid #FBA505;
+    font-family: "Be Vietnam Pro", sans-serif;
+    font-size: 16px;
+    margin: 0px 16px;
+  }
+
+  &__options {
+    display: flex;
+    margin-left: 140%;
+  }
+
+  &__icon {
+    width: 25px;
+    height: 25px;
+    margin-left: 4px;
+    cursor: pointer;
   }
 }

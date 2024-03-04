@@ -1,0 +1,14 @@
+<main>
+  <section aria-label="Sección de edición de cada superhéroe" class="superhero-info">
+    <section aria-label="Modal de edición" class="superhero-info__card">
+      <img [src]="hero!.image" class="superhero-info__img">
+      <article class="superhero-info__description">
+        <div class="superhero-info__item">
+          <label class="superhero-info__title"><i>Nombre:</i></label>
+          <input class="superhero-info__value" id="name" input="text" [(ngModel)]="hero!.name" maxlength="20" />
+        </div>
+        <button class="button" (click)="onSaveChanges()">Guardar</button>
+      </article>
+    </section>
+  </section>
+</main>
