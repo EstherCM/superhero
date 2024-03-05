@@ -19,7 +19,7 @@ export interface IDBSuperhero {
     weight: [string, string];
   };
   biography: {
-    aliases: [string]
+    aliases: [string];
     alignment: string;
     alterEgos: string;
     firstAppearance: string;

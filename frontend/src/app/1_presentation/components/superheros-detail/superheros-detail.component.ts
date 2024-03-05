@@ -16,7 +16,7 @@ export class SuperherosDetailComponent {
   @ViewChild('stats') statsRef!: ElementRef;
 
   public heroId: string | null = '';
-  public hero!: ISuperhero | null;
+  public hero!: ISuperhero;
   public deleteDialog = '¿Estás seguro de eliminar a este superhéroe?';
 
   private destroy$: Subject<void> = new Subject<void>();
